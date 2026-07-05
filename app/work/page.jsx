@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import { BsArrowUpRight, BsGithub } from "react-icons/bs";
 import {
@@ -10,7 +11,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@radix-ui/react-tooltip";
+} from "@/components/ui/tooltip";
 import Link from "next/link";
 import Image from "next/image";
 import WorkSliderBtns from "@/components/WorkSliderBtns";
@@ -31,7 +32,7 @@ const projects = [
       },
     ],
     image: "/assets/work/netflix.png",
-    live: "",
+    live: "https://net-flix-ui-clone-five.vercel.app/",
     github: "https://github.com/vivek072003/NetFlix-UI-Clone",
   },
   {
@@ -100,7 +101,7 @@ const projects = [
       },
     ],
     image: "/brainwave.png",
-    live: "https://brainwave-ai-chat.netlify.app/",
+    live: "https://brainwave-rouge-ten.vercel.app/",
     github: "https://github.com/vivek072003/Brainwave",
   },
   {
@@ -124,14 +125,15 @@ const projects = [
       },
     ],
     image: "/assets/work/portfolio.png",
-    live: "https://my-first-portfolio-mu.vercel.app/",
+    live: "https://my-portfolio-two-xi-53.vercel.app/",
     github: "https://github.com/vivek072003/My-Portfolio",
   },
 ];
 const Work = () => {
   const [project, setProject] = useState(projects[0]);
+  const [swiperRef, setSwiperRef] = useState(null);
   const handleSlideChange = (swiper) => {
-    const currentIndex = swiper.activeIndex;
+    const currentIndex = swiper.realIndex;
     setProject(projects[currentIndex]);
   };
   return (
@@ -144,7 +146,19 @@ const Work = () => {
       className="min-h-[80vh] flex flex-col justify-center py-12 xl:px-0"
     >
       <div className="container mx-auto">
-        <div className="flex flex-col xl:flex-row xl:gap-[30px] items-stretch">
+        <div
+          className="flex flex-col xl:flex-row xl:gap-[30px] items-stretch"
+          onMouseEnter={() => {
+            if (swiperRef && swiperRef.autoplay) {
+              swiperRef.autoplay.stop();
+            }
+          }}
+          onMouseLeave={() => {
+            if (swiperRef && swiperRef.autoplay) {
+              swiperRef.autoplay.start();
+            }
+          }}
+        >
           {/* Details */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -201,19 +215,40 @@ const Work = () => {
                     <div className="border-b border-white/10 w-full"></div>
                     {/* Buttons */}
                     <div className="flex items-center gap-4">
-                      {/* Github Project Button */}
-                      <Link href={project.github}>
+                      {/* Live Project Button */}
+                      {project.live && (
                         <TooltipProvider delayDuration={100}>
                           <Tooltip>
-                            <TooltipTrigger className="w-[54px] h-[54px] rounded-full bg-white/5 hover:bg-accent/10 border border-white/10 hover:border-accent/40 flex justify-center items-center group transition-all duration-300">
-                              <BsGithub className="text-white text-2xl group-hover:text-accent transition-colors duration-300" />
+                            <TooltipTrigger asChild>
+                              <Link
+                                href={project.live}
+                                className="w-[54px] h-[54px] rounded-full bg-white/5 hover:bg-accent/10 border border-white/10 hover:border-accent/40 flex justify-center items-center group transition-all duration-300"
+                              >
+                                <BsArrowUpRight className="text-white text-2xl group-hover:text-accent transition-colors duration-300" />
+                              </Link>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p className="bg-[#232329] border border-white/10 text-white text-xs px-3 py-1.5 rounded-md shadow-md">Github Repository</p>
+                              <p className="bg-[#232329] border border-white/10 text-white text-xs px-3 py-1.5 rounded-md shadow-md">Live Project</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
-                      </Link>
+                      )}
+                      {/* Github Project Button */}
+                      <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Link
+                              href={project.github}
+                              className="w-[54px] h-[54px] rounded-full bg-white/5 hover:bg-accent/10 border border-white/10 hover:border-accent/40 flex justify-center items-center group transition-all duration-300"
+                            >
+                              <BsGithub className="text-white text-2xl group-hover:text-accent transition-colors duration-300" />
+                            </Link>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="bg-[#232329] border border-white/10 text-white text-xs px-3 py-1.5 rounded-md shadow-md">Github Repository</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
                   </div>
                 </motion.div>
@@ -231,6 +266,14 @@ const Work = () => {
               <Swiper
                 spaceBetween={30}
                 slidesPerView={1}
+                loop={true}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
+                }}
+                modules={[Autoplay]}
+                onSwiper={setSwiperRef}
                 className="h-full w-full rounded-2xl"
                 onSlideChange={handleSlideChange}
               >
@@ -239,12 +282,19 @@ const Work = () => {
                     <SwiperSlide key={idx} className="w-full h-full">
                       <div className="h-full w-full relative group flex justify-center items-center bg-[#18181b]/80 border border-white/10 rounded-2xl overflow-hidden p-4 flex-col gap-3 shadow-2xl">
                         {/* Mock Browser Header */}
-                        <div className="w-full flex items-center border-b border-white/10 pb-2 mb-1 shrink-0">
+                        <div className="w-full flex items-center justify-between border-b border-white/10 pb-2 mb-1 shrink-0">
                           <div className="flex gap-1.5 items-center">
                             <span className="w-2 h-2 rounded-full bg-[#ff5f56]"></span>
                             <span className="w-2 h-2 rounded-full bg-[#ffbd2e]"></span>
                             <span className="w-2 h-2 rounded-full bg-[#27c93f]"></span>
                           </div>
+                          {/* URL Bar */}
+                          <div className="text-[10px] text-white/40 bg-white/5 px-4 py-0.5 rounded-md font-mono select-none tracking-wider max-w-[180px] sm:max-w-[260px] md:max-w-[340px] truncate border border-white/5">
+                            {proj.live
+                              ? proj.live.replace(/^https?:\/\//, "").replace(/\/$/, "")
+                              : proj.github.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                          </div>
+                          <div className="w-10"></div>
                         </div>
                         {/* Image container */}
                         <div className="relative w-full flex-1 rounded-lg overflow-hidden bg-black/10">
@@ -264,8 +314,8 @@ const Work = () => {
                 })}
                 {/* Slider Buttons */}
                 <WorkSliderBtns
-                  containerStyles="flex gap-2 absolute right-6 bottom-6 z-20 w-full justify-between xl:w-max xl:justify-none"
-                  btnStyles="bg-accent hover:bg-accent-hover text-primary text-[22px] w-[44px] h-[44px] flex justify-center items-center transition-all rounded-md shadow-lg"
+                  containerStyles="absolute top-1/2 -translate-y-1/2 left-0 right-0 z-20 flex justify-between pointer-events-none px-2"
+                  btnStyles="bg-black/35 hover:bg-accent/20 text-white/50 hover:text-accent border border-white/10 hover:border-accent/40 w-[28px] h-[64px] flex justify-center items-center transition-all rounded-md backdrop-blur-md shadow-lg pointer-events-auto"
                 />
               </Swiper>
             </div>

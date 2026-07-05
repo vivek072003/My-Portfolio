@@ -42,7 +42,7 @@ const Home = () => {
                 >
                   <a
                     className="lg:text-[18px] md:text-[15px] sm:text-[13px]"
-                    href="/assets/resume/CV.pdf"
+                    href="/assets/resume/vivek-resume.pdf"
                     download
                   >
                     Download CV
