@@ -4,10 +4,11 @@ import { Button } from "./ui/button";
 // Components
 import Nav from "./Nav";
 import MobileNav from "./MobileNav";
+import ThemeToggle from "./ThemeToggle";
 
 const Header = () => {
   return (
-    <header className="py-4 xl:py-5 text-white bg-pink-50/20 mb-8 xl:mb-12">
+    <header className="sticky top-0 z-50 py-4 xl:py-5 bg-primary/80 backdrop-blur-2xl border-b border-white/5 mb-8 xl:mb-12">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link href="/">
@@ -21,9 +22,11 @@ const Header = () => {
           <Link href="/contact">
             <Button>Hire Me</Button>
           </Link>
+          <ThemeToggle />
         </div>
         {/* Mobile Nav  */}
-        <div className="xl:hidden">
+        <div className="xl:hidden flex items-center gap-4">
+          <ThemeToggle />
           <MobileNav />
         </div>
       </div>

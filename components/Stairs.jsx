@@ -30,7 +30,7 @@ const Stairs = () => {
         return (
           <motion.div
             key={index}
-            className="w-full h-full bg-white relative"
+            className="w-full h-full bg-primary relative"
             variants={stairAnimation}
             initial="initial"
             animate="animate"

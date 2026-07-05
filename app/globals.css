@@ -3,9 +3,54 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply font-primary bg-primary text-white leading-loose;
+  :root {
+    --background: #1c1c22;
+    --foreground: #ffffff;
+    --accent: #00ff99;
+    --accent-hover: #00e187;
+    --grid-color: rgba(0, 150, 255, 0.12); /* Electric Blue Carbon in dark mode */
   }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    @apply font-primary leading-loose;
+  }
+
+  body.light-theme {
+    --background: #fafafa;
+    --foreground: #18181b;
+    --accent: #00b36c; /* premium emerald for reading on light theme */
+    --accent-hover: #00995c;
+    --grid-color: rgba(100, 116, 139, 0.16); /* Slate Gray in light mode */
+  }
+
+  /* Show color orbs only in light theme */
+  .light-only {
+    display: none;
+  }
+  body.light-theme .light-only {
+    display: flex;
+  }
+
+  /* Grid pattern definitions */
+  .bg-grid-pattern {
+    background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                      linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+    background-size: 45px 45px;
+    mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, #000 65%, transparent 100%);
+    transition: background-image 0.3s ease;
+  }
+
+  /* Grid opacity rules (high visibility) */
+  .dark-grid-opacity {
+    opacity: 0.65;
+  }
+  body.light-theme .dark-grid-opacity {
+    opacity: 0.85;
+  }
+
   .h1 {
     @apply text-[48px] xl:text-[80px] leading-[1.1] font-semibold;
   }
@@ -15,11 +60,109 @@
   .h3 {
     @apply text-[20px] xl:text-[24px] leading-[1.1] font-semibold;
   }
+
+  /* Outline text themes */
   .text-outline {
     -webkit-text-stroke: 1px #ffffff;
+    transition: -webkit-text-stroke 0.3s ease;
+  }
+  body.light-theme .text-outline {
+    -webkit-text-stroke: 1px #18181b;
   }
 
   .text-outline-hover {
-    -webkit-text-stroke: 1px #00ff99;
+    -webkit-text-stroke: 1px var(--accent);
+  }
+
+  /* Clockwise spin animation for color orbs */
+  @keyframes spin-clockwise {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .animate-spin-slow {
+    animation: spin-clockwise 30s linear infinite;
+  }
+
+  /* ========================================================
+     THEME SELECTOR OVERRIDES FOR LIGHT THEME
+     ======================================================== */
+  
+  /* Header background override */
+  body.light-theme .bg-pink-50\/20 {
+    background-color: rgba(24, 24, 27, 0.04) !important;
+  }
+
+  /* Standard card background overrides */
+  body.light-theme .bg-\[\#232329\] {
+    background-color: #ffffff !important;
+  }
+  body.light-theme .bg-\[\#232329\]\/30 {
+    background-color: rgba(255, 255, 255, 0.6) !important;
+  }
+  body.light-theme .bg-\[\#232329\]\/40 {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+  }
+  body.light-theme .bg-\[\#232329\]\/20 {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+  }
+  body.light-theme .bg-\[\#232329\]\/50 {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+  }
+
+  /* Sidebar/Tabs background overrides */
+  body.light-theme .bg-\[\#27272c\] {
+    background-color: #f4f4f5 !important;
+  }
+  body.light-theme .bg-\[\#27272c\]\/30 {
+    background-color: rgba(244, 244, 245, 0.45) !important;
+  }
+
+  /* Slides/browser image cards overrides */
+  body.light-theme .bg-\[\#18181b\]\/80 {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+  body.light-theme .bg-\[\#18181b\]\/90 {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Border color overrides */
+  body.light-theme .border-white\/5 {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+  }
+  body.light-theme .border-white\/10 {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+  }
+  body.light-theme .border-white\/20 {
+    border-color: rgba(0, 0, 0, 0.15) !important;
+  }
+
+  /* Text color overrides */
+  body.light-theme .text-white\/60 {
+    color: #71717a !important; /* text-zinc-500 */
+  }
+  body.light-theme .text-white\/50 {
+    color: #a1a1aa !important; /* text-zinc-400 */
+  }
+  body.light-theme .text-white {
+    color: #18181b !important; /* text-zinc-900 */
+  }
+
+  /* Stair transitions overlay theme override */
+  body.light-theme .bg-primary {
+    background-color: #fafafa !important;
+  }
+
+  /* Tabs text dynamic selection in light theme */
+  body.light-theme [data-state=active] {
+    color: #18181b !important;
+  }
+  body.light-theme [data-state=inactive] {
+    color: #71717a !important;
   }
 }

@@ -289,7 +289,7 @@ const Work = () => {
                             <span className="w-2 h-2 rounded-full bg-[#27c93f]"></span>
                           </div>
                           {/* URL Bar */}
-                          <div className="text-[10px] text-white/40 bg-white/5 px-4 py-0.5 rounded-md font-mono select-none tracking-wider max-w-[180px] sm:max-w-[260px] md:max-w-[340px] truncate border border-white/5">
+                          <div className="text-[10px] text-zinc-800 dark:text-white/40 bg-zinc-200/50 dark:bg-white/5 px-4 py-0.5 rounded-md font-mono select-none tracking-wider max-w-[180px] sm:max-w-[260px] md:max-w-[340px] truncate border border-black/5 dark:border-white/5">
                             {proj.live
                               ? proj.live.replace(/^https?:\/\//, "").replace(/\/$/, "")
                               : proj.github.replace(/^https?:\/\//, "").replace(/\/$/, "")}
@@ -315,7 +315,7 @@ const Work = () => {
                 {/* Slider Buttons */}
                 <WorkSliderBtns
                   containerStyles="absolute top-1/2 -translate-y-1/2 left-0 right-0 z-20 flex justify-between pointer-events-none px-2"
-                  btnStyles="bg-black/35 hover:bg-accent/20 text-white/50 hover:text-accent border border-white/10 hover:border-accent/40 w-[28px] h-[64px] flex justify-center items-center transition-all rounded-md backdrop-blur-md shadow-lg pointer-events-auto"
+                  btnStyles="bg-black/35 hover:bg-accent/20 text-zinc-800 dark:text-white/50 hover:text-accent border border-white/10 hover:border-accent/40 w-[28px] h-[64px] flex justify-center items-center transition-all rounded-md backdrop-blur-md shadow-lg pointer-events-auto"
                 />
               </Swiper>
             </div>

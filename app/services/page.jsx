@@ -57,9 +57,9 @@ const Services = () => {
                   </div>
                   <Link
                     href={service.href}
-                    className="w-[54px] h-[54px] rounded-full bg-white group-hover:bg-accent transition-all duration-500 flex justify-center items-center group-hover:-rotate-45"
+                    className="w-[54px] h-[54px] rounded-full bg-zinc-800 dark:bg-white group-hover:bg-accent transition-all duration-500 flex justify-center items-center group-hover:-rotate-45"
                   >
-                    <BsArrowDownRight className="text-2xl text-primary transition-colors duration-300" />
+                    <BsArrowDownRight className="text-2xl text-zinc-100 dark:text-primary transition-colors duration-300" />
                   </Link>
                 </div>
                 {/* title & desc container */}

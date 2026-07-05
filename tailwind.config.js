@@ -20,10 +20,10 @@ module.exports = {
     extend: {
 
       colors: {
-        primary: "#1c1c22",
+        primary: "var(--background)",
         accent: {
-          DEFAULT: "#00ff99",
-          hover: "#00e187",
+          DEFAULT: "var(--accent)",
+          hover: "var(--accent-hover)",
         }
       },
 
